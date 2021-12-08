@@ -99,6 +99,25 @@ class _MyHomePageState extends State<MyHomePage> {
                     )
                   ],
                 )
+            ),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black
+                )
+              ),
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Image.asset('lib/assets/instagram.png', width: 50, height: 50,),
+                  Icon(Icons.home, size: 50,),
+                  SizedBox(
+                    width: 50,
+                    height: 50,
+                  )
+                ],
+              ),
             )
           ],
         ),
