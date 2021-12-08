@@ -33,6 +33,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+const Color MY_YELLOW = Color(0xFFEEE380);
+
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
@@ -46,7 +48,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFEEE380),
+        elevation: 0,
+        backgroundColor: MY_YELLOW,
         leading: const Icon(
           Icons.menu,
           size: 30,
@@ -61,17 +64,68 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Text(
-            "My Application",
-            style: TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 40
+      body: Container(
+        color: MY_YELLOW,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: double.infinity,
+              child: Text(
+                "My Application",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 40
+                ),
+              ),
             ),
-          )
-        ],
+            Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    MyCard(
+                      color: Color(0xFF73C67C),
+                      icon: Icon(Icons.wb_sunny_outlined, size: 100)
+                    ),
+                    MyCard(
+                        color: Color(0xFFD86767),
+                        icon: Icon(Icons.cloud_outlined, size: 100,)
+                    ),
+                    MyCard(
+                        color: Color(0xFF57C7EB),
+                        icon: Icon(Icons.sailing_outlined, size: 100)
+                    )
+                  ],
+                )
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyCard extends StatelessWidget {
+  final Color color;
+  final Icon icon;
+  const MyCard({
+    required this.color,
+    required this.icon,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: color,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            vertical: 20.0,
+            horizontal: 70
+        ),
+        child: icon,
       ),
     );
   }
