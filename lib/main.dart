@@ -37,6 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime today = DateTime.now();
     return Scaffold(
       backgroundColor: Colors.deepPurple,
       body: SafeArea(
@@ -58,13 +59,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         Container(
                           color: Colors.red,
                           child: Text(
-                            itemDetail[index]["time"]!
+                            "${today.hour}:${today.minute.toStringAsPrecision(2)}"
                           ),
                         ),
                         Container(
                           color: Colors.green,
                           child: Text(
-                            itemDetail[index]["date"]!,
+                            today.day.toString()+'/'+today.month.toString()+'/'+today.year.toString(),
                             style: TextStyle(
                               color: Colors.white
                             ),
