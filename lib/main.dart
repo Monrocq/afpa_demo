@@ -31,27 +31,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  CarouselController buttonCarouselController = CarouselController();
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       backgroundColor: Colors.deepPurple,
       body: SafeArea(
@@ -73,13 +58,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         Container(
                           color: Colors.red,
                           child: Text(
-                            "10h00"
+                            itemDetail[index]["time"]!
                           ),
                         ),
                         Container(
                           color: Colors.green,
                           child: Text(
-                            "Dinan Le10/12/2021",
+                            itemDetail[index]["date"]!,
                             style: TextStyle(
                               color: Colors.white
                             ),
@@ -90,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Container(
                       color: Colors.brown,
                       child: Text(
-                        "Stade Rennais \nLe jour de gloire\nest arrivé",
+                        itemDetail[index]["text"]!,
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -101,7 +86,9 @@ class _MyHomePageState extends State<MyHomePage> {
               builder: (context) {
                 final double height =  MediaQuery.of(context).size.height-200;
                 return CarouselSlider(
+                  carouselController: buttonCarouselController,
                   options: CarouselOptions(
+                    scrollPhysics: NeverScrollableScrollPhysics(),
                     height: height,
                     viewportFraction: 1.0,
                     enlargeCenterPage: false,
@@ -120,15 +107,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-              Container(
-                  width: 100,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(80)),
-                    color: Color(0xFFAF45B1),
+              InkWell(
+                onTap: () {
+                  if (index < 4) {
+                    index++;
+                  } else {
+                    index = 0;
+                  }
+                  setState(() {
+                    buttonCarouselController.nextPage();
+                  });
+                },
+                child: Container(
+                    width: 100,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(80)),
+                      color: Color(0xFFAF45B1),
+                    ),
+                    child: Center(child: Text("Suivant"))
                   ),
-                  child: Center(child: Text("Suivant"))
-                ),
+              ),
             ],
           ),
         ),
@@ -142,5 +141,33 @@ class _MyHomePageState extends State<MyHomePage> {
     "lib/assets/foot3.jpg",
     "lib/assets/foot4.jpg",
     "lib/assets/foot5.jpg"
+  ];
+
+  List<Map<String, String>> itemDetail = [
+    {
+      "time": "10:00",
+      "date": "25/11/2021",
+      "text": "Victoire au stade de France"
+    },
+    {
+      "time": "11:00",
+      "date": "26/11/2021",
+      "text": "Victoire au stade de Marseille"
+    },
+    {
+      "time": "12:00",
+      "date": "27/11/2021",
+      "text": "Victoire au stade de Belgique"
+    },
+    {
+      "time": "13:00",
+      "date": "29/11/2021",
+      "text": "Victoire au stade de Rennes"
+    },
+    {
+      "time": "14:00",
+      "date": "10/12/2021",
+      "text": "Victoire au stade de Saint-Malo"
+    }
   ];
 }
