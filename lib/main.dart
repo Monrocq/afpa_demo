@@ -56,58 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        color: Colors.red,
-                        child: Text(
-                          "10h00"
-                        ),
-                      ),
-                      Container(
-                        color: Colors.green,
-                        child: Text(
-                          "Dinan Le10/12/2021",
-                          style: TextStyle(
-                            color: Colors.white
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Container(
-                    color: Colors.brown,
-                    child: Text(
-                      "Stade Rennais \nLe jour de gloire\nest arrivé",
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(child: Container()),
-            SizedBox(
-                width: 100,
-                child: TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Color(0xFFAF45B1)),
-                    foregroundColor: MaterialStateProperty.all(Colors.black)
-                  ),
-                  onPressed: (){},
-                  child: Text(
-                    "Suivant"
-                  ),
-                ),
-              ),
-          ],
+          children: <Widget>[],
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
