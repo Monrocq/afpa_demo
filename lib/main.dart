@@ -4,27 +4,26 @@
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.yellow,
+      home: MyHomePage(
+          title: "Flutter Demo Home Page"
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   final String title;
-  late int _counter;
 
-  MyHomePage({
+  const MyHomePage({
     Key? key,
     required this.title,
   }) : super(key: key);
@@ -33,14 +32,12 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-const Color MY_YELLOW = Color(0xFFEEE380);
-
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _selectedIndex = 0;
 
-  void _incrementCounter() {
+  void _onItemTapped(int index) {
     setState(() {
-      _counter++;
+      _selectedIndex = index;
     });
   }
 
@@ -49,7 +46,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: MY_YELLOW,
         leading: const Icon(
           Icons.menu,
           size: 30,
@@ -64,63 +60,58 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Container(
-        color: MY_YELLOW,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              width: double.infinity,
-              child: Text(
-                "My Application",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 40
-                ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(
+            width: double.infinity,
+            child: Text(
+              "My Application",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w900,
+                fontSize: 40
               ),
             ),
-            Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    MyCard(
-                      color: Color(0xFF73C67C),
-                      icon: Icon(Icons.wb_sunny_outlined, size: 100)
-                    ),
-                    MyCard(
-                        color: Color(0xFFD86767),
-                        icon: Icon(Icons.cloud_outlined, size: 100,)
-                    ),
-                    MyCard(
-                        color: Color(0xFF57C7EB),
-                        icon: Icon(Icons.sailing_outlined, size: 100)
-                    )
-                  ],
-                )
-            ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.black
-                )
-              ),
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Image.asset('lib/assets/instagram.png', width: 50, height: 50,),
-                  Icon(Icons.home, size: 50,),
-                  SizedBox(
-                    width: 50,
-                    height: 50,
+          ),
+          Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  MyCard(
+                    color: Color(0xFF73C67C),
+                    icon: Icon(Icons.wb_sunny_outlined, size: 100)
+                  ),
+                  MyCard(
+                      color: Color(0xFFD86767),
+                      icon: Icon(Icons.cloud_outlined, size: 100,)
+                  ),
+                  MyCard(
+                      color: Color(0xFF57C7EB),
+                      icon: Icon(Icons.sailing_outlined, size: 100)
                   )
                 ],
-              ),
-            )
-          ],
-        ),
+              )
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: ImageIcon(
+              AssetImage("lib/assets/instagram.png")
+            ),
+            label: 'Instagram',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+        ],
       ),
     );
   }
