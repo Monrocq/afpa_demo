@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -54,62 +55,92 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Colors.deepPurple,
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        color: Colors.red,
-                        child: Text(
-                          "10h00"
-                        ),
-                      ),
-                      Container(
-                        color: Colors.green,
-                        child: Text(
-                          "Dinan Le10/12/2021",
-                          style: TextStyle(
-                            color: Colors.white
+        child: SizedBox(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                height: 50,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          color: Colors.red,
+                          child: Text(
+                            "10h00"
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  Container(
-                    color: Colors.brown,
-                    child: Text(
-                      "Stade Rennais \nLe jour de gloire\nest arrivé",
-                      textAlign: TextAlign.center,
+                        Container(
+                          color: Colors.green,
+                          child: Text(
+                            "Dinan Le10/12/2021",
+                            style: TextStyle(
+                              color: Colors.white
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(child: Container()),
-            SizedBox(
-                width: 100,
-                child: TextButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Color(0xFFAF45B1)),
-                    foregroundColor: MaterialStateProperty.all(Colors.black)
-                  ),
-                  onPressed: (){},
-                  child: Text(
-                    "Suivant"
-                  ),
+                    Container(
+                      color: Colors.brown,
+                      child: Text(
+                        "Stade Rennais \nLe jour de gloire\nest arrivé",
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
                 ),
               ),
-          ],
+            Builder(
+              builder: (context) {
+                final double height =  MediaQuery.of(context).size.height-200;
+                return CarouselSlider(
+                  options: CarouselOptions(
+                    height: height,
+                    viewportFraction: 1.0,
+                    enlargeCenterPage: false,
+                    // autoPlay: false,
+                  ),
+                  items: imgList
+                      .map((uri) => Container(
+                    child: Center(
+                        child: Image.asset(
+                          uri,
+                          fit: BoxFit.cover,
+                          height: height,
+                        )),
+                  ))
+                      .toList()
+                );
+              },
+            ),
+              Container(
+                  width: 100,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(80)),
+                    color: Color(0xFFAF45B1),
+                  ),
+                  child: Center(child: Text("Suivant"))
+                ),
+            ],
+          ),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  List<String> imgList = [
+    "lib/assets/foot1.jpg",
+    "lib/assets/foot2.jpg",
+    "lib/assets/foot3.jpg",
+    "lib/assets/foot4.jpg",
+    "lib/assets/foot5.jpg"
+  ];
 }
