@@ -58,6 +58,14 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Text("Nom engistré : $nom"),
               Text("Email enregistré : $email"),
+              SizedBox(
+                width: size.width / 1.5,
+                child: Divider(
+                  color: Colors.black,
+                  thickness: 2,
+                  height: 30,
+                ),
+              ),
               Form(
                 key: _formKey,
                 child: Column(
@@ -95,10 +103,43 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 30,
                     ),
                     ElevatedButton(
-                        onPressed: () => setState(() {
-                              nom = _nomController.text;
-                              email = _emailController.text;
-                            }),
+                        onPressed: () {
+                          if (_nomController.text.isNotEmpty &&
+                              _emailController.text.isNotEmpty) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                      title: Text("Attention"),
+                                      content: Text(
+                                          "Etes vous sur de vouloir continuer?"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text("Annuler"),
+                                        ),
+                                        TextButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                nom = _nomController.text;
+                                                email = _emailController.text;
+                                              });
+                                            },
+                                            child: Text("Confirmer"))
+                                      ],
+                                    ));
+                            //
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                "Veuillez remplir tous les champs",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              backgroundColor: Colors.yellow,
+                            ));
+                          }
+                        },
                         child: Text("Enregistrer"))
                   ],
                 ),
