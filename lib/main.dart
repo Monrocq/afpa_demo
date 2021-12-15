@@ -42,8 +42,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    futureClasse = fetchStudents();
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    futureClasse = fetchStudents();
+    super.didChangeDependencies();
   }
 
   @override
@@ -83,7 +88,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          setState(() {
+            futureClasse = fetchStudents();
+          });
+        },
         tooltip: 'Fetch data',
         child: const Icon(Icons.download),
       ),
@@ -91,9 +100,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<Class3Students> fetchStudents() async {
-    final String url = Platform.isAndroid ? "10.0.2.2" : "localhot";
-    final response =
-        await http.get(Uri.parse('http://192.168.174.171:3000/api'));
+    final String url = Platform.isAndroid ? "10.0.2.2" : "localhost";
+    final response = await http.get(Uri.parse('http://$url:3000/api'));
     if (response.statusCode == 200) {
       return Class3Students.fromJson(jsonDecode(response.body));
     } else {
