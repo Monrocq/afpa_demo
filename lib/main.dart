@@ -37,6 +37,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late Future<Class3Students> futureClasse;
+
+  @override
+  void initState() {
+    futureClasse = fetchStudents();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
