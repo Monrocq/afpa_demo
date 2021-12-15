@@ -3,6 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -52,9 +53,33 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [],
+        child: FutureBuilder(
+          future: futureClasse,
+          builder:
+              (BuildContext context, AsyncSnapshot<Class3Students> snapshot) {
+            if (snapshot.hasData) {
+              return DataTable(columns: const <DataColumn>[
+                DataColumn(label: Text("Designation")),
+                DataColumn(label: Text("Nom élève"))
+              ], rows: <DataRow>[
+                DataRow(cells: <DataCell>[
+                  const DataCell(Text("Eleve 1")),
+                  DataCell(Text(snapshot.data!.eleve1))
+                ]),
+                DataRow(cells: <DataCell>[
+                  const DataCell(Text("Eleve 2")),
+                  DataCell(Text(snapshot.data!.eleve2))
+                ]),
+                DataRow(cells: <DataCell>[
+                  const DataCell(Text("Eleve 3")),
+                  DataCell(Text(snapshot.data!.eleve3))
+                ])
+              ]);
+            } else if (snapshot.hasError) {
+              return Text("il y'a eu des erreurs : ${snapshot.error}");
+            }
+            return const CircularProgressIndicator();
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -66,7 +91,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<Class3Students> fetchStudents() async {
-    final response = await http.get(Uri.parse('http://localhost:3000/api'));
+    final String url = Platform.isAndroid ? "10.0.2.2" : "localhot";
+    final response =
+        await http.get(Uri.parse('http://192.168.174.171:3000/api'));
     if (response.statusCode == 200) {
       return Class3Students.fromJson(jsonDecode(response.body));
     } else {
