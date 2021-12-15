@@ -2,8 +2,11 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:projet_de_test/models/class_3_students.dart';
 
 void main() => runApp(MyApp());
 
@@ -54,7 +57,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<http.Response> fetchStudents() {
-    return http.get(Uri.parse('https://localhost:3000/api'));
+  Future<Class3Students> fetchStudents() async {
+    final response = await http.get(Uri.parse('http://localhost:3000/api'));
+    if (response.statusCode == 200) {
+      return Class3Students.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load the request http');
+    }
   }
 }
